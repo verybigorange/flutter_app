@@ -4,6 +4,14 @@ import 'package:flutter_project/pages/my_page.dart';
 import 'package:flutter_project/pages/search_page.dart';
 import 'package:flutter_project/pages/travel_page.dart';
 
+/**
+ * 底部tap切换内容
+ * Scaffold的body属性中用PageView作为内容部分
+ * Scaffold的bottomNavigationBar属性传入BottomNavigationBar来进行切换
+ * 点击底部Tap，在它onTap中接收点击元素的index
+ * PageView的PageController用用于切换页面
+ */
+
 class TapNavigator extends StatefulWidget {
   @override
   _TapNavigatorState createState() => _TapNavigatorState();
@@ -28,6 +36,7 @@ class _TapNavigatorState extends State<TapNavigator> {
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         onTap: (index) {
+          // 接收点击的index，跳转页面和tap切换
           _controller.jumpToPage(index);
           setState(() {
             _currentIndex = index;
