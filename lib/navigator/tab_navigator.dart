@@ -63,7 +63,7 @@ class _TapNavigatorState extends State<TapNavigator> {
                 color: _defaultColor,
               ),
               activeIcon: Icon(
-                Icons.home,
+                Icons.search,
                 color: _activeColor,
               ),
               title: Text(
@@ -77,7 +77,7 @@ class _TapNavigatorState extends State<TapNavigator> {
                 color: _defaultColor,
               ),
               activeIcon: Icon(
-                Icons.home,
+                Icons.camera_alt,
                 color: _activeColor,
               ),
               title: Text(
@@ -91,7 +91,7 @@ class _TapNavigatorState extends State<TapNavigator> {
                 color: _defaultColor,
               ),
               activeIcon: Icon(
-                Icons.home,
+                Icons.account_circle,
                 color: _activeColor,
               ),
               title: Text(

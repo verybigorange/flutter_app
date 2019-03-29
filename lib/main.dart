@@ -18,7 +18,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('text'),
+        title: Text('假携程App'),
       ),
       body: Container(
         child:TapNavigator()
