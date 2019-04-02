@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/pages/home_page.dart';
+import 'package:flutter_project/pages/music_page.dart';
 import 'package:flutter_project/pages/my_page.dart';
 import 'package:flutter_project/pages/search_page.dart';
 import 'package:flutter_project/pages/travel_page.dart';
@@ -30,7 +30,7 @@ class _TapNavigatorState extends State<TapNavigator> {
     return Scaffold(
       body: PageView(
         controller: _controller,
-        children: <Widget>[HomePage(), SearchPage(), TravelPage(), MyPage()],
+        children: <Widget>[MusicPage(), SearchPage(), TravelPage(), MyPage()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -45,15 +45,15 @@ class _TapNavigatorState extends State<TapNavigator> {
         items: [
           BottomNavigationBarItem(
               icon: Icon(
-                Icons.home,
+                Icons.music_video,
                 color: _defaultColor,
               ),
               activeIcon: Icon(
-                Icons.home,
+                Icons.music_video,
                 color: _activeColor,
               ),
               title: Text(
-                '首页',
+                '音乐',
                 style: TextStyle(
                     color: _currentIndex == 0 ? _activeColor : _defaultColor),
               )),
