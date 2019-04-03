@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 /**
  * 轮播 使用第三方组件flutter_swiper
  * 自定义appBar，监听滚动通知，通过滚动值设置透明度，NotificationListener通知监听。
  * 在NotificationListener通知中判断是否是滚动notification is ScrollUpdateNotification，并且通知深度depth为0
  */
+
+// 问题1：fromJson
+
 class MusicPage extends StatefulWidget {
   @override
   _MusicPageState createState() => _MusicPageState();
@@ -20,6 +25,8 @@ class _MusicPageState extends State<MusicPage> {
   ];
   double _appBarOpacity = 0;
 
+  List<dynamic> rangeList = [];
+
   _onscroll(offset) {
     var alpha = offset / 100;
     if (alpha > 1) alpha = 1.0;
@@ -28,6 +35,24 @@ class _MusicPageState extends State<MusicPage> {
     setState(() {
       _appBarOpacity = alpha;
     });
+  }
+
+  void _getRangeData() {
+    http.get('https://api.apiopen.top/musicRankings').then((response) {
+      var res = json.decode(response.body);
+      if (res["code"] == 200) {
+        setState(() {
+          rangeList = List.from(res["result"]);
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getRangeData();
   }
 
   @override
@@ -68,7 +93,6 @@ class _MusicPageState extends State<MusicPage> {
                         children: <Widget>[
                           ListTile(
                             title: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Padding(
                                     padding: EdgeInsets.only(right: 10),
@@ -80,6 +104,9 @@ class _MusicPageState extends State<MusicPage> {
                               ],
                             ),
                           ),
+                          Column(
+                            children: _buildRangeItem(rangeList),
+                          )
                         ],
                       ))
                 ],
@@ -99,4 +126,35 @@ class _MusicPageState extends State<MusicPage> {
           )),
     );
   }
+}
+
+List<Widget> _buildRangeItem(List<dynamic> rangeList) {
+  List<Widget> items = [];
+  rangeList.forEach((value) => {items.add(_rangeItem(value))});
+
+  return items;
+}
+
+Widget _rangeItem(item) {
+  return Container(
+      child: Padding(
+    padding: EdgeInsets.only(bottom: 20),
+    child: Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(bottom: 10),
+          child: Text(
+            item['name'],
+            style: TextStyle(fontSize: 20, color: Colors.grey),
+          ),
+        ),
+        Row(
+          children: <Widget>[
+            Image.network(item['pic_s444'], height: 100, width: 200),
+            Text('歌曲')
+          ],
+        )
+      ],
+    ),
+  ));
 }
