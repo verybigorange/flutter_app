@@ -104,8 +104,11 @@ class _MusicPageState extends State<MusicPage> {
                               ],
                             ),
                           ),
-                          Column(
-                            children: _buildRangeItem(rangeList),
+                          Padding(
+                            child: Column(
+                              children: _buildRangeItem(rangeList),
+                            ),
+                            padding: EdgeInsets.symmetric(horizontal: 10),
                           )
                         ],
                       ))
@@ -138,23 +141,66 @@ List<Widget> _buildRangeItem(List<dynamic> rangeList) {
 Widget _rangeItem(item) {
   return Container(
       child: Padding(
-    padding: EdgeInsets.only(bottom: 20),
-    child: Column(
+    padding: EdgeInsets.only(bottom: 30),
+    child: Row(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: Text(
-            item['name'],
-            style: TextStyle(fontSize: 20, color: Colors.grey),
+          child: Image.network(
+            item['pic_s444'],
+            height: 100,
+            width: 120,
+            fit: BoxFit.fill,
           ),
+          padding: EdgeInsets.only(right: 10),
         ),
         Row(
           children: <Widget>[
-            Image.network(item['pic_s444'], height: 100, width: 200),
-            Text('歌曲')
+            Column(
+              children: _Music(item['content']),
+              crossAxisAlignment: CrossAxisAlignment.start,
+            )
           ],
         )
       ],
     ),
   ));
+}
+
+List<Widget> _Music(List<dynamic> list) {
+  List<Widget> items = [];
+  list.forEach((value) => {items.add(_MusicItem(value))});
+  return items.sublist(0, 3);
+}
+
+// 排行榜中的每个歌曲元素
+Widget _MusicItem(item) {
+  return Container(
+      child: Padding(
+          padding: EdgeInsets.only(bottom: 8),
+          child: Row(
+            children: <Widget>[
+              Padding(
+                child: Image.network(item['pic_big'], height: 40, width: 40),
+                padding: EdgeInsets.only(right: 10),
+              ),
+              Column(
+                children: <Widget>[
+                  ConstrainedBox(
+                    child: Text(
+                      item['title'],
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    constraints: BoxConstraints(maxWidth: 200),
+                  ),
+                  Text(
+                    item['author'],
+                    maxLines: 2,
+                    style: TextStyle(color: Colors.grey),
+                  )
+                ],
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+              )
+            ],
+          )));
 }
